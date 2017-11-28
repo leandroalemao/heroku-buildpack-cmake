@@ -1,3 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+# this pack is valid for all apps
 echo "cmake 3.2.3"
 exit 0
