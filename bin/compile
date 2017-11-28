@@ -5,17 +5,18 @@ indent() {
 }
 
 echo "-----> Installing cmake 3.2.3"
-# change to the the BUILD_DIR ($1)
 BUILD_DIR=$1
+VENDOR_DIR="vendor"
+DOWNLOAD_URL="https://raw.githubusercontent.com/Munett/cmake-binary/master/cmake.tar.gz"
+
+echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
+
 cd $BUILD_DIR
+mkdir -p $VENDOR_DIR
+cd $VENDOR_DIR
+curl -L --silent $DOWNLOAD_URL | tar xz
 
-# download the binary (-O) silently (-s)
-wget https://raw.githubusercontent.com/Munett/cmake-binary/master/cmake.tar.gz -O cmake.tar.gz
-# make a directory to untar (like unzip) the binary
-mkdir -p vendor/cmake
-# untar the binary to the directory we want
-tar -C vendor/cmake -xvf cmake.tar.gz
-
-PROFILE_PATH="$BUILD_DIR/.profile.d/ffmpeg.sh"
 echo "exporting PATH" | indent
+PROFILE_PATH="$BUILD_DIR/.profile.d/cmake.sh"
+mkdir -p $(dirname $PROFILE_PATH)
 echo 'export PATH="$PATH:$HOME/vendor/cmake/bin"' >> $PROFILE_PATH
